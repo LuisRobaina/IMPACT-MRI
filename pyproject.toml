@@ -20,8 +20,16 @@ exclude = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.10"
-ssdu = {git = "https://github.com/byaman14/SSDU.git", branch = "main" }
+python = ">=3.9, <3.12"
+matplotlib = "3.7.2"
+tensorboard = "2.13.0"
+tensorboardx = "2.6.1"
+hydra-core = "1.3.2"
+ipykernel = "6.24.0"
+numpy = "1.24.2"
+tensorflow = "^2.13.0"
+h5py = "^3.9.0"
+scikit-image = "^0.21.0"
 
 
 [tool.poetry.group.dev.dependencies]

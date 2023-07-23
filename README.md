@@ -13,14 +13,16 @@ Similar studies have been done in other fields. For example, Andrychowicz et al.
 ## Table of Contents
 1. [Installation](#installation)
 2. [Datasets](#datasets)
-3. [Usage](#usage)
 4. [Results](#results)
-5. [Contributors](#contributors)
+5. [Experiments](#experiments)
+6. [Contributors](#contributors)
 
 ## Installation
 We recommend the following steps to install and reproduce the results from this work:
 
-## Pyenv install
+There are two tools needed to install this project `pyenv` to manage python versions, and `poetry` to manage project dependencies.
+
+## 1. Pyenv install
 You first need to install pre-requisites for `pyenv`:
 
 ```bash
@@ -55,7 +57,7 @@ Now select the pyenv python with one of the following commands:
 
 > Note: Python base interpreter requires some additional modules. Those are not installed with e.g. Ubuntu 18.04 as default. Hence the need to select a pyenv python version that does come prepackaged with those additional modules before poetry installation in the next step.
 
-## Poetry install
+## 2. Poetry install
 We will install `poetry` and then create a virtual environment using the `poetry.lock` file in the repository to make sure your environment has all the correct dependencies.
 
 First, install `poetry` for `Mac OS / Linux` with the official installer:
@@ -69,15 +71,26 @@ Don't forget to add `poetry` to your path with
 export PATH="$HOME/.local/bin:$PATH"
 ```
 
-## IMPACT-MRI Project setup
-Set up the virtual environment with poetry:
+At this point all dependencies are ready to setup the project.
+
+## IMPACT-MRI Project Setup
+
+### 1. Set up the virtual environment with poetry:**
 
 ```bash
 poetry config virtualenvs.in-project true # stores virtualenv in project directory
-poetry env use 3.10.10 # if you want to use a different python version you can choose here; but you must have that python version installed
+poetry env use 3.10.10
 poetry shell
+```
+> Note: a .venv directory should exists inside your /IMPACT-MRI directory.
+> after `poetry shell` the environment (impact-mri-py3.8) should be active.
+
+### 2. Install dependencies in the venv
+```bash
 poetry install
 ```
+
+### 3. Test the installation
 
 ## Datasets
 Main project dataset: The Knee Portion of fastMRI Dataset (https://fastmri.med.nyu.edu/) is a good candidate dataset for this project because it was collected and approved by the leading institution NYU and passed relevant institutional reviews. Because this dataset is well established for this challenge, we wil be able to compare results with other methods that have published results for the fastMRI challenge.
@@ -85,6 +98,11 @@ Main project dataset: The Knee Portion of fastMRI Dataset (https://fastmri.med.n
 Other supporting datasets:
 More fastMRI Data: https://github.com/facebookresearch/fastMRI
 Raw K-Space MRI Data: http://mridata.org/
+
+### download the dataset
+```bash
+wget -O knee_singlecoil.tar.xz "https://fastmri-dataset.s3.amazonaws.com/v2.0/knee_singlecoil_test.tar.xz?AWSAccessKeyId=AKIAJM2LEZ67Y2JL3KRA&Signature=z5gwtap4eKUKoi8LMHv%2BP4Lw5mc%3D&Expires=1697853709"
+```
 
 ### Dependencies
 This project requires the following dependencies:
