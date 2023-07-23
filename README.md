@@ -1,6 +1,5 @@
 # IMPACT-MRI
-Intelligent Machine-learning Powered Acceleration Technique for MRI
-(CS7643 Final Project)
+Intelligent Machine-learning Powered Acceleration Technique for MRI (CS7643 Final Project)
 
 ## Description
 
@@ -13,12 +12,79 @@ Similar studies have been done in other fields. For example, Andrychowicz et al.
 
 ## Table of Contents
 1. [Installation](#installation)
-2. [Data](#data)
+2. [Datasets](#datasets)
 3. [Usage](#usage)
 4. [Results](#results)
 5. [Contributors](#contributors)
 
 ## Installation
+We recommend the following steps to install and reproduce the results from this work:
+
+## Pyenv install
+You first need to install pre-requisites for `pyenv`:
+
+```bash
+# FOR Ubuntu
+sudo apt-get install -y make build-essential libssl-dev zlib1g-dev \
+libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev \
+libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl
+
+# FOR MacOS
+brew install openssl readline sqlite3 xz zlib
+```
+Now we can install `pyenv` with the official installer:
+```bash
+curl https://pyenv.run | bash
+```
+
+Load pyenv automatically by appending the following to `~/.bash_profile` if it exists, otherwise `~/.profile` (for login shells) and `~/.bashrc` (for interactive shells):
+
+```bash
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+```
+
+Now we can build a python environment with `pyenv`:
+```bash
+pyenv install 3.10.10
+```
+
+Now select the pyenv python with one of the following commands:
+2. `pyenv local 3.10.10`: sets python version as local default (do this inside `/IMPACT-MRI/`).
+
+> Note: Python base interpreter requires some additional modules. Those are not installed with e.g. Ubuntu 18.04 as default. Hence the need to select a pyenv python version that does come prepackaged with those additional modules before poetry installation in the next step.
+
+## Poetry install
+We will install `poetry` and then create a virtual environment using the `poetry.lock` file in the repository to make sure your environment has all the correct dependencies.
+
+First, install `poetry` for `Mac OS / Linux` with the official installer:
+
+```bash
+curl -sSL https://install.python-poetry.org | python3 -
+```
+
+Don't forget to add `poetry` to your path with
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+```
+
+## IMPACT-MRI Project setup
+Set up the virtual environment with poetry:
+
+```bash
+poetry config virtualenvs.in-project true # stores virtualenv in project directory
+poetry env use 3.10.10 # if you want to use a different python version you can choose here; but you must have that python version installed
+poetry shell
+poetry install
+```
+
+## Datasets
+Main project dataset: The Knee Portion of fastMRI Dataset (https://fastmri.med.nyu.edu/) is a good candidate dataset for this project because it was collected and approved by the leading institution NYU and passed relevant institutional reviews. Because this dataset is well established for this challenge, we wil be able to compare results with other methods that have published results for the fastMRI challenge.
+
+Other supporting datasets:
+More fastMRI Data: https://github.com/facebookresearch/fastMRI
+Raw K-Space MRI Data: http://mridata.org/
 
 ### Dependencies
 This project requires the following dependencies:
