@@ -32,9 +32,10 @@ To install these dependencies, you can use pip:
 
 ```bash
 pip install -r requirements.txt
+```
 
 ## Contributors
-- **Chen Yan Michael Chou**: [email](cchou85@gatech.edu)
-- **Luis Robaina**: [email](lrobaina3@gatech.edu)
+- **Chen Yan Michael Chou**: (cchou85@gatech.edu)
+- **Luis Robaina**: (lrobaina3@gatech.edu)
 
 
