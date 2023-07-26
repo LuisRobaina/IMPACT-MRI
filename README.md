@@ -100,22 +100,14 @@ More fastMRI Data: https://github.com/facebookresearch/fastMRI
 Raw K-Space MRI Data: http://mridata.org/
 
 ### download the dataset
-```bash
-wget -O knee_singlecoil.tar.xz "https://fastmri-dataset.s3.amazonaws.com/v2.0/knee_singlecoil_test.tar.xz?AWSAccessKeyId=AKIAJM2LEZ67Y2JL3KRA&Signature=z5gwtap4eKUKoi8LMHv%2BP4Lw5mc%3D&Expires=1697853709"
-```
-
-### Dependencies
-This project requires the following dependencies:
-
-- Python (>= 3.6)
-- Numpy (>= 1.16.0)
-- Scipy (>= 1.4.1)
-- Sklearn (>= 0.22.1)
-
-To install these dependencies, you can use pip:
+Run the following commands from the `IMPACT-MRI/` repository root directory
 
 ```bash
-pip install -r requirements.txt
+wget -O data/knee_singlecoil.tar.xz "https://fastmri-dataset.s3.amazonaws.com/v2.0/knee_singlecoil_test.tar.xz?AWSAccessKeyId=AKIAJM2LEZ67Y2JL3KRA&Signature=z5gwtap4eKUKoi8LMHv%2BP4Lw5mc%3D&Expires=1697853709"
+
+cd data/
+tar -xf knee_singlecoil.tar.xz
+rm knee_singlecoil.tar.xz
 ```
 
 ## Contributors

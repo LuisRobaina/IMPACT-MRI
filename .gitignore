@@ -1,0 +1,4 @@
+*.h5
+data/singlecoil_dataset
+*.pkl
+lightning_logs/
