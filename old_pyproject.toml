@@ -1,0 +1,58 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "IMPACT-MRI"
+version = "1.0.0"
+description = "Intelligent Machine-learning Powered Acceleration Technique for MRI"
+authors = [
+    "Luis Robaina <lrobaina3@gatech.edu>",
+    "Chen Yan Michael Chou <cchou85@gatech.edu>"
+]
+readme = "README.md"
+exclude = [
+    ".git",
+    ".github",
+    ".flake8",
+    ".gitignore",
+    ".pre-commit-config.yaml",
+]
+
+[tool.poetry.dependencies]
+python = ">=3.9, <3.12"
+matplotlib = "3.7.2"
+tensorboard = "2.13.0"
+tensorboardx = "2.6.1"
+hydra-core = "1.3.2"
+ipykernel = "6.24.0"
+numpy = "1.24.2"
+tensorflow = "^2.13.0"
+h5py = "^3.9.0"
+torch = "2.0.0"
+pytorch-lightning = "<2.0.0"
+runstats= "^1.8.0"
+pytorch_lightning= "^1.4"
+torchmetrics="^0.5.1"
+pandas= "^1.3.4"
+tqdm = "^4.65.0"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.1.0"
+flake8 = "^6.0.0"
+isort = "^5.12.0"
+pre-commit = "^3.2.0"
+pytest = "^7.3.0"
+
+[tool.black]
+line-length = 88
+target-version = ["py310"]
+
+[tool.isort]
+profile = "black"
+line_length = 88
+lines_after_imports = 2
+lines_between_sections = 1
+honor_noqa = true
+skip_gitignore = true
