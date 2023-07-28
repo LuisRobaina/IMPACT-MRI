@@ -22,7 +22,7 @@ We recommend the following steps to install and reproduce the results from this 
 
 There are two tools needed to install this project `pyenv` to manage python versions, and `poetry` to manage project dependencies.
 
-## 1. Pyenv install
+### 1. Pyenv install
 You first need to install pre-requisites for `pyenv`:
 
 ```bash
@@ -51,15 +51,11 @@ eval "$(pyenv init -)"
 
 Now we can build a python environment with `pyenv`:
 ```bash
+pyenv install 3.10.10
 pyenv global 3.10.10
 ```
 
-Now select the pyenv python with one of the following commands:
-2. `pyenv local 3.10.10`: sets python version as local default (do this inside `/IMPACT-MRI/`).
-
-> Note: Python base interpreter requires some additional modules. Those are not installed with e.g. Ubuntu 18.04 as default. Hence the need to select a pyenv python version that does come prepackaged with those additional modules before poetry installation in the next step.
-
-## 2. Poetry install
+### 2. Poetry install
 We will install `poetry` and then create a virtual environment using the `poetry.lock` file in the repository to make sure your environment has all the correct dependencies.
 
 First, install `poetry` for `Mac OS / Linux` with the official installer:
@@ -75,7 +71,7 @@ export PATH="$HOME/.local/bin:$PATH"
 
 At this point all dependencies are ready to setup the project.
 
-## IMPACT-MRI Project Setup
+### IMPACT-MRI Project Setup
 
 ### 1. Set up the virtual environment with poetry:**
 
@@ -84,6 +80,7 @@ poetry config virtualenvs.in-project true # stores virtualenv in project directo
 poetry env use 3.10.10
 poetry shell
 ```
+
 > Note: a .venv directory should exists inside your /IMPACT-MRI directory.
 > after `poetry shell` the environment (impact-mri-py3.8) should be active.
 
@@ -96,7 +93,7 @@ poetry install
 ### 3. Test the installation
 inside the venv run the following python command:
 
-bash```
+```bash
 python -c "from fastmri.pl_modules import FastMriDataModule, UnetModule"
 ```
 > If you don't see any errors then it is likely that the installation was successful.
@@ -105,7 +102,7 @@ python -c "from fastmri.pl_modules import FastMriDataModule, UnetModule"
 ## Datasets
 Main project dataset: The Knee Portion of fastMRI Dataset (https://fastmri.med.nyu.edu/) is a good candidate dataset for this project because it was collected and approved by the leading institution NYU and passed relevant institutional reviews. Because this dataset is well established for this challenge, we wil be able to compare results with other methods that have published results for the fastMRI challenge.
 
-Other supporting datasets:
+**Other supporting datasets:**
 More fastMRI Data: https://github.com/facebookresearch/fastMRI
 Raw K-Space MRI Data: http://mridata.org/
 

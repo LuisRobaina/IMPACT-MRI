@@ -79,6 +79,7 @@ class Unet(nn.Module):
 
         # apply down-sampling layers
         for layer in self.down_sample_layers:
+            
             output = layer(output)
             stack.append(output)
             output = F.avg_pool2d(output, kernel_size=2, stride=2, padding=0)

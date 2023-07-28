@@ -3,3 +3,4 @@ data/singlecoil_dataset
 *.pkl
 lightning_logs/
 *.tar.*
+*.egg-info

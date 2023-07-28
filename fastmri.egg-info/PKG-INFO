@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: fastmri
-Version: 0.1.dev18+g4058a1c
+Version: 0.1.dev20+g8ecbae6.d20230728
 Summary: A large-scale dataset of both raw MRI measurements and clinical MRI images.
 Author: Meta/NYU fastMRI Team
 Author-email: fastmri@fb.com
@@ -21,7 +21,6 @@ Requires-Python: >=3.8
 Description-Content-Type: text/markdown
 Provides-Extra: dev
 Provides-Extra: tests
-License-File: LICENSE.md
 
 # IMPACT-MRI
 Intelligent Machine-learning Powered Acceleration Technique for MRI (CS7643 Final Project)
@@ -47,19 +46,21 @@ We recommend the following steps to install and reproduce the results from this 
 
 There are two tools needed to install this project `pyenv` to manage python versions, and `poetry` to manage project dependencies.
 
-## 1. Pyenv install
+### 1. Pyenv install
 You first need to install pre-requisites for `pyenv`:
 
 ```bash
 # FOR Ubuntu
+sudo apt-get update
 sudo apt-get install -y make build-essential libssl-dev zlib1g-dev \
 libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev \
-libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl
+libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl python3-distutils
 
 # FOR MacOS
 brew install openssl readline sqlite3 xz zlib
 ```
-Now we can install `pyenv` with the official installer:
+
+Install `pyenv` with the official installer:
 ```bash
 curl https://pyenv.run | bash
 ```
@@ -75,14 +76,10 @@ eval "$(pyenv init -)"
 Now we can build a python environment with `pyenv`:
 ```bash
 pyenv install 3.10.10
+pyenv global 3.10.10
 ```
 
-Now select the pyenv python with one of the following commands:
-2. `pyenv local 3.10.10`: sets python version as local default (do this inside `/IMPACT-MRI/`).
-
-> Note: Python base interpreter requires some additional modules. Those are not installed with e.g. Ubuntu 18.04 as default. Hence the need to select a pyenv python version that does come prepackaged with those additional modules before poetry installation in the next step.
-
-## 2. Poetry install
+### 2. Poetry install
 We will install `poetry` and then create a virtual environment using the `poetry.lock` file in the repository to make sure your environment has all the correct dependencies.
 
 First, install `poetry` for `Mac OS / Linux` with the official installer:
@@ -98,7 +95,7 @@ export PATH="$HOME/.local/bin:$PATH"
 
 At this point all dependencies are ready to setup the project.
 
-## IMPACT-MRI Project Setup
+### IMPACT-MRI Project Setup
 
 ### 1. Set up the virtual environment with poetry:**
 
@@ -107,20 +104,29 @@ poetry config virtualenvs.in-project true # stores virtualenv in project directo
 poetry env use 3.10.10
 poetry shell
 ```
+
 > Note: a .venv directory should exists inside your /IMPACT-MRI directory.
 > after `poetry shell` the environment (impact-mri-py3.8) should be active.
 
 ### 2. Install dependencies in the venv
 ```bash
+pip install -e .
 poetry install
 ```
 
 ### 3. Test the installation
+inside the venv run the following python command:
+
+```bash
+python -c "from fastmri.pl_modules import FastMriDataModule, UnetModule"
+```
+> If you don't see any errors then it is likely that the installation was successful.
+
 
 ## Datasets
 Main project dataset: The Knee Portion of fastMRI Dataset (https://fastmri.med.nyu.edu/) is a good candidate dataset for this project because it was collected and approved by the leading institution NYU and passed relevant institutional reviews. Because this dataset is well established for this challenge, we wil be able to compare results with other methods that have published results for the fastMRI challenge.
 
-Other supporting datasets:
+**Other supporting datasets:**
 More fastMRI Data: https://github.com/facebookresearch/fastMRI
 Raw K-Space MRI Data: http://mridata.org/
 
@@ -128,7 +134,7 @@ Raw K-Space MRI Data: http://mridata.org/
 Run the following commands from the `IMPACT-MRI/` repository root directory
 
 ```bash
-wget -O data/knee_singlecoil.tar.xz "https://fastmri-dataset.s3.amazonaws.com/v2.0/knee_singlecoil_test.tar.xz?AWSAccessKeyId=AKIAJM2LEZ67Y2JL3KRA&Signature=z5gwtap4eKUKoi8LMHv%2BP4Lw5mc%3D&Expires=1697853709"
+wget -O data/knee_singlecoil_dataset.tar.xz "https://fastmri-dataset.s3.amazonaws.com/v2.0/knee_singlecoil_test.tar.xz?AWSAccessKeyId=AKIAJM2LEZ67Y2JL3KRA&Signature=z5gwtap4eKUKoi8LMHv%2BP4Lw5mc%3D&Expires=1697853709"
 
 cd data/
 tar -xf knee_singlecoil.tar.xz
@@ -138,5 +144,3 @@ rm knee_singlecoil.tar.xz
 ## Contributors
 - **Chen Yan Michael Chou**: (cchou85@gatech.edu)
 - **Luis Robaina**: (lrobaina3@gatech.edu)
-
-
