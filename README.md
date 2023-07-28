@@ -27,14 +27,16 @@ You first need to install pre-requisites for `pyenv`:
 
 ```bash
 # FOR Ubuntu
+sudo apt-get update
 sudo apt-get install -y make build-essential libssl-dev zlib1g-dev \
 libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev \
-libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl
+libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl python3-distutils
 
 # FOR MacOS
 brew install openssl readline sqlite3 xz zlib
 ```
-Now we can install `pyenv` with the official installer:
+
+Install `pyenv` with the official installer:
 ```bash
 curl https://pyenv.run | bash
 ```
@@ -49,7 +51,7 @@ eval "$(pyenv init -)"
 
 Now we can build a python environment with `pyenv`:
 ```bash
-pyenv install 3.10.10
+pyenv global 3.10.10
 ```
 
 Now select the pyenv python with one of the following commands:
@@ -87,6 +89,7 @@ poetry shell
 
 ### 2. Install dependencies in the venv
 ```bash
+pip install -e .
 poetry install
 ```
 
@@ -96,6 +99,8 @@ inside the venv run the following python command:
 bash```
 python -c "from fastmri.pl_modules import FastMriDataModule, UnetModule"
 ```
+> If you don't see any errors then it is likely that the installation was successful.
+
 
 ## Datasets
 Main project dataset: The Knee Portion of fastMRI Dataset (https://fastmri.med.nyu.edu/) is a good candidate dataset for this project because it was collected and approved by the leading institution NYU and passed relevant institutional reviews. Because this dataset is well established for this challenge, we wil be able to compare results with other methods that have published results for the fastMRI challenge.
@@ -118,5 +123,3 @@ rm knee_singlecoil.tar.xz
 ## Contributors
 - **Chen Yan Michael Chou**: (cchou85@gatech.edu)
 - **Luis Robaina**: (lrobaina3@gatech.edu)
-
-
