@@ -91,6 +91,11 @@ poetry install
 ```
 
 ### 3. Test the installation
+inside the venv run the following python command:
+
+bash```
+python -c "from fastmri.pl_modules import FastMriDataModule, UnetModule"
+```
 
 ## Datasets
 Main project dataset: The Knee Portion of fastMRI Dataset (https://fastmri.med.nyu.edu/) is a good candidate dataset for this project because it was collected and approved by the leading institution NYU and passed relevant institutional reviews. Because this dataset is well established for this challenge, we wil be able to compare results with other methods that have published results for the fastMRI challenge.
@@ -103,7 +108,7 @@ Raw K-Space MRI Data: http://mridata.org/
 Run the following commands from the `IMPACT-MRI/` repository root directory
 
 ```bash
-wget -O data/knee_singlecoil.tar.xz "https://fastmri-dataset.s3.amazonaws.com/v2.0/knee_singlecoil_test.tar.xz?AWSAccessKeyId=AKIAJM2LEZ67Y2JL3KRA&Signature=z5gwtap4eKUKoi8LMHv%2BP4Lw5mc%3D&Expires=1697853709"
+wget -O data/knee_singlecoil_dataset.tar.xz "https://fastmri-dataset.s3.amazonaws.com/v2.0/knee_singlecoil_test.tar.xz?AWSAccessKeyId=AKIAJM2LEZ67Y2JL3KRA&Signature=z5gwtap4eKUKoi8LMHv%2BP4Lw5mc%3D&Expires=1697853709"
 
 cd data/
 tar -xf knee_singlecoil.tar.xz
