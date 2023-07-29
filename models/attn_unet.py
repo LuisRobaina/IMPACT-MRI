@@ -139,6 +139,7 @@ class AttentionUnet(nn.Module):
 
         # apply up-sampling layers
         for transpose_conv, conv, attention in zip(self.up_transpose_conv, self.up_conv, self.attention_gates):
+            
             downsample_layer = stack.pop()
             output = transpose_conv(output)
             
