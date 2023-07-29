@@ -4,3 +4,6 @@ data/singlecoil_dataset
 lightning_logs/
 *.tar.*
 *.egg-info
+*.pyc
+fastmri/__pycache__/
+logs/

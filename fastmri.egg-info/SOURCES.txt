@@ -111,6 +111,14 @@ fastmri/pl_modules/__pycache__/data_module.cpython-310.pyc
 fastmri/pl_modules/__pycache__/mri_module.cpython-310.pyc
 fastmri/pl_modules/__pycache__/unet_module.cpython-310.pyc
 fastmri/pl_modules/__pycache__/varnet_module.cpython-310.pyc
+models/__init__.py
+models/attn_unet.py
+models/shared_components.py
+models/unet.py
+notebooks/0_fastMRI_tutorial.ipynb
+notebooks/1_unet_tutorial.ipynb
+notebooks/2_attention_u_net.ipynb
+notebooks/3_train_unet.ipynb
 ssdu/README.md
 ssdu/UnrollNet.py
 ssdu/data_consistency.py

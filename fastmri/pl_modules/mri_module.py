@@ -51,14 +51,14 @@ class MriModule(pl.LightningModule):
     Other methods from LightningModule can be overridden as needed.
     """
 
-    def __init__(self, num_log_images: int = 16):
+    def __init__(self, num_log_images: int = 1):
         """
         Args:
             num_log_images: Number of images to log. Defaults to 16.
         """
         super().__init__()
 
-        self.num_log_images = num_log_images
+        self.num_log_images = 1
         self.val_log_indices = None
 
         self.NMSE = DistributedMetricSum()
@@ -253,7 +253,7 @@ class MriModule(pl.LightningModule):
         # logging params
         parser.add_argument(
             "--num_log_images",
-            default=16,
+            default=1,
             type=int,
             help="Number of images to log to Tensorboard",
         )

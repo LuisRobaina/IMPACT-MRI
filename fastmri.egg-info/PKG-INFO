@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: fastmri
-Version: 0.1.dev20+g8ecbae6.d20230728
+Version: 0.1.dev22+g3da55c5.d20230729
 Summary: A large-scale dataset of both raw MRI measurements and clinical MRI images.
 Author: Meta/NYU fastMRI Team
 Author-email: fastmri@fb.com
