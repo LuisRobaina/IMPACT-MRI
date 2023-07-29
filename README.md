@@ -13,9 +13,7 @@ Similar studies have been done in other fields. For example, Andrychowicz et al.
 ## Table of Contents
 1. [Installation](#installation)
 2. [Datasets](#datasets)
-4. [Results](#results)
-5. [Experiments](#experiments)
-6. [Contributors](#contributors)
+3. [Contributors](#contributors)
 
 ## Installation
 We recommend the following steps to install and reproduce the results from this work:
