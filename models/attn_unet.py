@@ -47,7 +47,8 @@ class attention_gate(nn.Module):
         alpha = self.relu(Wg + Wx)
         alpha = self.psi(alpha)
         alpha = self.Sigmoid(alpha)
-        return x * alpha
+
+        return x * alpha, alpha
 
 
 class AttentionUnet(nn.Module):
@@ -67,6 +68,7 @@ class AttentionUnet(nn.Module):
         chans: int = 32,
         num_pool_layers: int = 4,
         drop_prob: float = 0.0,
+        alpha: float = 0.0
     ):
         """
         Args:
@@ -83,14 +85,15 @@ class AttentionUnet(nn.Module):
         self.chans = chans
         self.num_pool_layers = num_pool_layers
         self.drop_prob = drop_prob
+        self.alpha = alpha
 
         self.down_sample_layers = nn.ModuleList([ConvBlock(in_chans, chans, drop_prob)])
         ch = chans
         for _ in range(num_pool_layers - 1):
             self.down_sample_layers.append(ConvBlock(ch, ch * 2, drop_prob))
             ch *= 2
+        
         self.conv = ConvBlock(ch, ch * 2, drop_prob)
-
         self.up_conv = nn.ModuleList()
         self.up_transpose_conv = nn.ModuleList()
         
@@ -127,7 +130,12 @@ class AttentionUnet(nn.Module):
         stack = []
         output = image
 
+        # up-sampling layers
         post_attn_norm_diff = []
+
+        attn_weights = torch.zeros(1).to(image.device)
+
+        batch_size = image.shape[0]
 
         # apply down-sampling layers
         for layer in self.down_sample_layers:
@@ -138,6 +146,7 @@ class AttentionUnet(nn.Module):
         output = self.conv(output)
 
         # apply up-sampling layers
+        N = len(self.up_transpose_conv)
         for transpose_conv, conv, attention in zip(self.up_transpose_conv, self.up_conv, self.attention_gates):
             
             downsample_layer = stack.pop()
@@ -145,10 +154,13 @@ class AttentionUnet(nn.Module):
             
             #calculate attention using the output from previous layer and skip connection layer
             
-            post_attn_downsample_layer = attention(output, downsample_layer)
+            post_attn_downsample_layer, alpha = attention(output, downsample_layer)
             post_attn_norm_diff.append(
-                post_attn_downsample_layer.norm().item() - downsample_layer.norm().item()
+                (post_attn_downsample_layer.norm().item() - downsample_layer.norm().item())
             )
+
+            attn_weights += torch.norm(alpha, p=1)
+
             downsample_layer = post_attn_downsample_layer
             
             # reflect pad on the right/botton if needed to handle odd input dimensions
@@ -164,7 +176,8 @@ class AttentionUnet(nn.Module):
             output = conv(output)
 
         return output, {
-            "mean_post_attn_norm_diff": np.mean(post_attn_norm_diff)
+            "mean_post_attn_norm_diff": np.mean(post_attn_norm_diff)/batch_size,
+            "mean_attn_weights": attn_weights/(N*batch_size)
         }
 
 
@@ -184,6 +197,7 @@ class AttnUnetModule(MriModule):
         lr_step_size=40,
         lr_gamma=0.1,
         weight_decay=0.0,
+        alpha=0.0,
         **kwargs,
     ):
         """
@@ -224,6 +238,7 @@ class AttnUnetModule(MriModule):
             chans=self.chans,
             num_pool_layers=self.num_pool_layers,
             drop_prob=self.drop_prob,
+            alpha=alpha
         )
 
     def forward(self, image):
@@ -232,21 +247,27 @@ class AttnUnetModule(MriModule):
         
         return output.squeeze(1), info
 
+    def attn_loss(self, attn_weigth_loss):
+        return -1 * self.attn_unet.alpha*attn_weigth_loss
+
     def training_step(self, batch, batch_idx):
         
         output, info = self(batch.image)
         
         loss = F.l1_loss(output, batch.target)
+        
+        attn_weigth_loss = info["mean_attn_weights"]
 
         self.log("loss", loss.detach())
 
-        return loss
+        return loss + self.attn_loss(attn_weigth_loss)
 
     def validation_step(self, batch, batch_idx):
         output, info = self(batch.image)
         mean = batch.mean.unsqueeze(1).unsqueeze(2)
         std = batch.std.unsqueeze(1).unsqueeze(2)
-
+        attn_weigth_loss = info["mean_attn_weights"]
+        
         return {
             "batch_idx": batch_idx,
             "fname": batch.fname,
@@ -254,7 +275,7 @@ class AttnUnetModule(MriModule):
             "max_value": batch.max_value,
             "output": output * std + mean,
             "target": batch.target * std + mean,
-            "val_loss": F.l1_loss(output, batch.target),
+            "val_loss": F.l1_loss(output, batch.target) + self.attn_loss(attn_weigth_loss),
         }
 
     def test_step(self, batch, batch_idx):

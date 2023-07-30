@@ -83,12 +83,12 @@ def train():
     # Attention UNet Model Hyperparameters #
     ########################################
 
-    in_chans=1          # number of input channels to U-Net
-    out_chans=1         # number of output chanenls to U-Net
-    chans=32            # number of top-level U-Net channels
-    num_pool_layers=4   # number of U-Net pooling layers
-    drop_prob=0.4       # dropout probability
-    lr=0.001            # RMSProp learning rate
+    in_chans=1           # number of input channels to U-Net
+    out_chans=1          # number of output chanenls to U-Net
+    chans=32             # number of top-level U-Net channels
+    num_pool_layers=4    # number of U-Net pooling layers
+    drop_prob=0.0        # dropout probability
+    lr=0.0001            # RMSProp learning rate
     lr_step_size=40     # epoch at which to decrease learning rate
     lr_gamma=0.1        # extent to which to decrease learning rate
     weight_decay=0.0    # weight decay regularization strength
@@ -103,6 +103,7 @@ def train():
         lr_step_size=lr_step_size,
         lr_gamma=lr_gamma,
         weight_decay=weight_decay,
+        alpha=0.95
     )
 
     from pytorch_lightning.loggers import TensorBoardLogger
@@ -113,7 +114,8 @@ def train():
         deterministic=False,            # makes things slower, but deterministic
         default_root_dir='../logs',     # directory for logs and checkpoints
         max_epochs=50,                  # max number of epochs
-        logger = TensorBoardLogger('logs/', name='attn_unet')
+        logger = TensorBoardLogger('logs/', name='attn_unet'),
+        gpus=[2]
     )
 
     trainer = pl.Trainer(**trainer_config)
